@@ -1,0 +1,34 @@
+@import "node_modules/normalize.less/normalize.less";
+
+
+body {
+	background: #64e7d8;
+}
+h1 {
+	font-family: "Helvetica Neue", "Proxima Nova", Arial;
+	color: #cb6e12;
+	padding: 0.4em;
+}
+@base: #166086;
+svg {
+	width: 80%;
+	margin: 0 auto;
+
+	path {
+		fill: @base;
+
+		.loop(38);
+	
+	}
+	.loop(@counter) when (@counter > 1) {
+		.loop((@counter - 1));    // next iteration
+		.colorPath(@counter); // code for each iteration
+	}
+
+	.colorPath(@i) {
+		&:nth-child(@{i}) {
+            fill: lighten(@base, percentage(@i*0.01));
+        }
+	}
+        
+}
