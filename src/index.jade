@@ -9,8 +9,10 @@ html(lang='en', class='load-complete')
 		meta(author='Your name here')
 		link(rel='stylesheet', type='text/css', href='styles/main.css')
 		script(defer src='/scripts/main.js')
+		script(src='/socket.io/socket.io.js')
 	body
 		article(role='main')
+			audio(id='real_player', src='/songs/relaxed.mp3', preload='auto', controls, autoplay)
 			input#page-toggle-chk(type="checkbox" style="display: none;")
 			input#window-toggle-chk(type="checkbox" style="display: none;")
 			label(for="window-toggle-chk").start-radio-button Start radio
@@ -31,15 +33,15 @@ html(lang='en', class='load-complete')
 					.cover.load-transition.load-transition-delay-1.relaxed#cover
 						.glow.load-transition.load-transition-delay-2
 						ul.tool-buttons
-							li#trigger-one Happy
-							li#trigger-two Intense
+							li#trigger-one(data-mood='happy') Happy
+							li#trigger-two(data-mood='intense') Intense
 						.current-station-text.load-transition.load-transition-delay-2
 							include ./includes/shell.jade
 						.current-station-name-bar.load-transition.load-transition-delay-2.mid-text Slack
 						.sound-bars
 					.swipe-bar.load-transition.load-transition-delay-2
 						.track-data
-							#song-name Loading track...
+							#song-name Christopher Ferreira - Goodnight Moon
 					.volume-bar.load-transition.load-transition-delay-2
 						.left-icon
 							include ./includes/volume.jade

@@ -2,9 +2,13 @@
 	console.log('hello');
 	var triggerMoods,
 		getSong,
-		songData = {},
+		songData = {
+			happy: 'Graveola e O Lixo Polifônico - Benzinho',
+			relaxed: 'Christopher Ferreira - Goodnight Moon',
+			intense: 'AC-DC - Highway to Hell'
+		},
 		query = 'http://developer.echonest.com/api/v4/song/search?api_key=7PGUFNFZGMNEOS65Z&mood=',
-		songUri = 'http://developer.echonest.com/api/v4/song/search?api_key=7PGUFNFZGMNEOS65Z&format=json&results=1&artist=';
+		songUri = 'http://developer.echonest.com/api/v4/track/profile?api_key=7PGUFNFZGMNEOS65Z&format=json&id=';
 	
 	triggerMoods = function(event){
 		var trigger = $(event.currentTarget),
@@ -14,38 +18,49 @@
 
 		// change visuals of mood 
 		$('#current-mood').html(newMood);
-		trigger.html(oldMood);
+		trigger.html(oldMood).attr('data-mood',oldMood);
 		$('#cover').removeClass(oldMood).addClass(newMood);
 
 		// get new songs for new mood
-		$.get(query+newMood, function( data ) {
-			songData[newMood] = data.response;
-			var firstHit = data.response.songs[0],
-				artist = firstHit.artist_name,
-				title = firstHit.title;
-				newSong = artist + ' - ' + title
+		// $.get(query+newMood, function( data ) {
+		// 	songData[newMood] = data.response.songs;
+		// 	var firstHit = data.response.songs[0],
+		// 		artist = firstHit.artist_name,
+		// 		title = firstHit.title;
+		// 		newSong = artist + ' - ' + title,
+		// 		songId = firstHit.id;
+
+		// 		console.log(firstHit);
 			
-			$('#song-name').html(newSong);
+		// 	$('#song-name').html(newSong);
 
-			artist = artist.replace(/ /g, '%20');
-			title = title.replace(/ /g, '%20');
+			
 
-			getSong(newMood, artist, title, 0);
-		});
+		// 	// getSong(newMood, songId, 0);
+		// });
 
+		$('#real_player').attr('src', '/songs/'+newMood+'.mp3').attr('autoplay', true);
+		$('#song-name').html(songData[newMood]);
+		$('title').html(songData[newMood]);
 		// console.log('trigger', newMood, oldMood);
 	}
 
-	getSong = function(mood, artist, title, i) {
-		$.get(songUri + artist + '&title=' + title + '&bucket=id:7digital-UK&bucket=audio_summary&bucket=tracks', function(data){
+	getSong = function(mood, songId, i) {
+		$.get(songUri + songId + '&bucket=audio_summary', function(data){
 			console.log(data);
-			if(data.response.songs[0].tracks[0].hasOwnProperty('preview_url')) {
-				console.log(data.response.songs[0].tracks[0].hasOwnProperty('preview_url'))
+			if(data.response.track[0] && data.response.track[0].hasOwnProperty('preview_url')) {
+				songData[mood][i].preview = data.response.track[0].preview_url;
+				console.log(i, songData[mood][i].preview_url);
 			} else {
 				i++;
-				setTimeout(function(){
-					songData[mood][i]
-				}, 3500);
+				if(songData[mood][i]) {
+					setTimeout(function(){
+						getSong(mood, songData[mood][i].id, i);
+						return;
+					}, 3500);
+				} else {
+					console.log('no song found');
+				}
 			}
 		})
 	} 
@@ -60,6 +75,14 @@
     socket.on('soundlevel-update', function(level){
           var soundlevel = parseInt(level);
           console.log('SOUND LEVEL: ', soundlevel);
+          if (soundlevel < 30) {
+          	$('[data-mood="relaxed"').trigger('click');
+          } else if (soundlevel < 70) {
+          	$('[data-mood="happy"').trigger('click');
+          } else {
+          	$('[data-mood="intense"').trigger('click');
+          }
+
     });
 
 // http://play.spotify.com/song=songId
