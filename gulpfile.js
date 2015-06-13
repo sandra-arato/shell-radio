@@ -22,7 +22,6 @@ function startExpress() {
 
 var lr;
 function startLivereload() {
-
     lr = require('tiny-lr')();
     lr.listen(LIVERELOAD_PORT);
 }
@@ -61,7 +60,7 @@ gulp.task('styles', function(){
         plugins: [autoprefix, cleancss]
       }))
       .pipe(gulp.dest('dist/styles'));
-})
+});
 
 gulp.task('scripts', function() {
   gulp.src([
@@ -69,7 +68,7 @@ gulp.task('scripts', function() {
     'src/scripts/player.js'
     ])
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('dist/scripts'))
+    .pipe(gulp.dest('dist/scripts'));
 });
 
 // run this before you start your daily routine
