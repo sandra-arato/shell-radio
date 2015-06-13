@@ -48,9 +48,19 @@
 				}, 3500);
 			}
 		})
-	}
+	} 
 
 	$('#trigger-one, #trigger-two').click(triggerMoods);
+
+
+	/*
+       	SOCKET IO CODE.
+	*/
+    var socket = io();
+    socket.on('soundlevel-update', function(level){
+          var soundlevel = parseInt(level);
+          console.log('SOUND LEVEL: ', soundlevel);
+    });
 
 // http://play.spotify.com/song=songId
 }(jQuery, window));
