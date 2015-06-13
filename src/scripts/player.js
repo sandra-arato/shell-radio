@@ -42,10 +42,10 @@
 			if(data.response.songs[0].tracks[0].hasOwnProperty('preview_url')) {
 				console.log(data.response.songs[0].tracks[0].hasOwnProperty('preview_url'))
 			} else {
-				// i++;
-				// setTimeout(function(){
-				// 	// songData[mood][i]
-				// }, 3500);
+				i++;
+				setTimeout(function(){
+					songData[mood][i]
+				}, 3500);
 			}
 		})
 	}
