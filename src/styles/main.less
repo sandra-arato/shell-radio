@@ -176,6 +176,7 @@ input[type="range"] {
 				bottom: 0;
 				text-align: center;
 				transition-duration: .3s;
+				text-transform: capitalize;
 			}
 
 			.page-front-title {
@@ -201,15 +202,24 @@ input[type="range"] {
 
 			.cover {
 				height: 100px;
-				background: #FFF linear-gradient(15deg, #EE0006, #EA8400, #EE0085) no-repeat;
-				background-size: 100% 200%;
-				animation: background-scroll 7s alternate ease-in-out infinite;
 				position: relative;
 				overflow: hidden;
 				opacity: 0;
 
+				&.intense {
+					background: #FFF linear-gradient(15deg, #EE0006, #EA8400, #EE0085) no-repeat;
+					background-size: 100% 200%;
+					animation: background-scroll 7s alternate ease-in-out infinite;
+				}
+
 				&.happy {
 					background: #FFF linear-gradient(15deg, #77DB1E, #E89F15, #EFEB16) no-repeat;
+					background-size: 100% 200%;
+					animation: background-scroll 7s alternate ease-in-out infinite;
+				}
+
+				&.relaxed {
+					background: #FFF linear-gradient(15deg, #4950A5, #3C8BC4, #9916EF) no-repeat;
 					background-size: 100% 200%;
 					animation: background-scroll 7s alternate ease-in-out infinite;
 				}
@@ -245,6 +255,7 @@ input[type="range"] {
 						font-size: 14px;
 						cursor: pointer;
 						transition-duration: .3s;
+						text-transform: capitalize;
 
 						&:hover {
 							transition-duration: .05s;
