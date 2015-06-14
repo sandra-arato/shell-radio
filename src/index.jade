@@ -12,20 +12,20 @@ html(lang='en', class='load-complete')
 		script(src='/socket.io/socket.io.js')
 	body
 		article(role='main')
-			audio(id='real_player', src='/songs/relaxed.mp3', preload='auto', controls, autoplay)
-			input#page-toggle-chk(type="checkbox" style="display: none;")
-			input#window-toggle-chk(type="checkbox" style="display: none;")
-			label(for="window-toggle-chk").start-radio-button Start radio
+			audio(id='real_player', src='/songs/relaxed.mp3', preload='auto', controls)
+			input#page-toggle-chk(type='checkbox',style='display: none;')
+			input#window-toggle-chk(type='checkbox', style='display: none;', checked='true')
+			label(for='window-toggle-chk').start-radio-button#play Start radio
 			.window.load-transition
 				.top-bar.load-transition
-					label.left-action(for="page-toggle-chk")
+					label.left-action(for='page-toggle-chk')
 						.line.line-1
 						.line.line-2
 						.line.line-3
 					.mid-text
 						.title.page-front-title#current-mood Relaxed
 						.title.page-saved-stations-title All stations
-					label.right-action(for="window-toggle-chk")
+					label.right-action#pause(for='window-toggle-chk')
 						.line.line-1
 						.line.line-2
 						.line.line-3
@@ -45,7 +45,7 @@ html(lang='en', class='load-complete')
 					.volume-bar.load-transition.load-transition-delay-2
 						.left-icon
 							include ./includes/volume.jade
-						input(type="range" value="80").range
+						input(type='range' value='80').range
 				.page.page-saved-stations
 					menu.station-list
 						ul
