@@ -30,6 +30,8 @@ console.log('MRAA Version: ' + mraa.getVersion());
 
 var LCD = require ('jsupm_i2clcd');
 var myLcd = new LCD.Jhd1313m1 (0, 0x3E, 0x62);
+var colorUtils = require('./colorUtils');
+var mathUtils = require('./mathUtils');
 
 myLcd.setCursor(0,0);
 
