@@ -1,5 +1,6 @@
 (function($, window, undefined) {
 	console.log('hello');
+	var started = false;
 	var triggerMoods,
 		getSong,
 		songData = {
@@ -68,6 +69,8 @@
 	$('#trigger-one, #trigger-two').click(triggerMoods);
 
 	$('#pause').click(function(e){
+		started = true;
+
 		$('audio')[0].pause();
 	});
 
@@ -81,11 +84,15 @@
 	*/
     var socket = io();
     socket.on('soundlevel-update', function(level){
+    	if(!started){
+    		return;
+    	}
+
           var soundlevel = parseInt(level);
           console.log('SOUND LEVEL: ', soundlevel);
-          if (soundlevel < 30) {
+          if (soundlevel < 30 ) {
           	$('[data-mood="relaxed"').trigger('click');
-          } else if (soundlevel < 70) {
+          } else if (soundlevel < 60) {
           	$('[data-mood="happy"').trigger('click');
           } else {
           	$('[data-mood="intense"').trigger('click');
