@@ -1,4 +1,13 @@
 // ##############  SERVER CODE  #############
+var express = require('express'),
+    app = express();
+
+var server = app.listen(4000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log('Example app listening at http://%s:%s', host, port);
+});
 
 app.use(express.static('dist'));
 
@@ -13,19 +22,9 @@ app.get('/sound/:soundlevel', function (req, res){
     }
 });
 
-var express = require('express'),
-    app = express();
-
-var server = app.listen(4000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('Example app listening at http://%s:%s', host, port);
-});
-
 var io = require('socket.io').listen(server);
 
-//############## EDISON CODE 
+// //############## EDISON CODE 
 var mraa = require('mraa');
 console.log('MRAA Version: ' + mraa.getVersion());
 
