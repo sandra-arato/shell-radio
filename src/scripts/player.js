@@ -3,7 +3,7 @@
 	var triggerMoods,
 		getSong,
 		songData = {
-			happy: 'Graveola e O Lixo Polifônico - Benzinho',
+			happy: 'Pharrel Williams - Happy',
 			relaxed: 'Christopher Ferreira - Goodnight Moon',
 			intense: 'AC-DC - Highway to Hell'
 		},
@@ -66,6 +66,14 @@
 	} 
 
 	$('#trigger-one, #trigger-two').click(triggerMoods);
+
+	$('#pause').click(function(e){
+		$('audio')[0].pause();
+	});
+
+	$('#play').click(function(e){
+		$('audio')[0].play();
+	});
 
 
 	/*
