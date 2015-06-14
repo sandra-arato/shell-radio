@@ -1,6 +1,3 @@
-/*jslint node:true, vars:true, bitwise:true, unparam:true */
-/*jshint unused:true */
-
 var colorUtils = require('./colorUtils');
 var mathUtils = require('./mathUtils');
 
@@ -44,7 +41,7 @@ function periodicActivity()
         myLcd.write("Noise");
         myLcd.setColor(color.r, color.g, color.b);
         myLcd.setCursor(1,2);
-        myLcd.write(mappedThresh.toFixed(1).toString());
+        myLcd.write(mappedThresh.toFixed(1) .toString());
     }
     setTimeout(periodicActivity, 200);
 }
@@ -52,4 +49,30 @@ function periodicActivity()
 console.log('start');
 periodicActivity();
 
+// ##############  SERVER CODE  #############
+var express = require('express'),
+    app = express();
+
+app.use(express.static('dist'));
+
+
+var server = app.listen(4000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log('Example app listening at http://%s:%s', host, port);
+});
+
+var io = require('socket.io').listen(server);
+console.log(io);
+app.get('/sound/:soundlevel', function (req, res){
+    var soundlevel = parseInt(req.params.soundlevel, 10);
+    if(typeof soundlevel === 'number'){
+        io.emit('soundlevel-update', soundlevel);
+        res.send('Soundlevel UPDATED ');
+
+    }else{
+        res.send('Error getting soundlevel "' + req.params.soundlevel + '"');
+    }
+});
 
