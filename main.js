@@ -1,6 +1,6 @@
 var colorUtils = require('./colorUtils');
 var mathUtils = require('./mathUtils');
-
+var io = require('socket.io').listen(server);
 var mraa = require('mraa');
 console.log('MRAA Version: ' + mraa.getVersion());
 
@@ -35,13 +35,18 @@ function periodicActivity()
         
         var mapColors = Math.abs(mathUtils.map(thresh, 0, 600, 100, 0));
         var color = colorUtils.hsvToRgb( mapColors * 0.004, 1, .5);
+        var soundlevel = mappedThresh.toFixed(1);
 
         console.log("Threshold is " + thresh);
         myLcd.setCursor(0,0);
         myLcd.write("Noise");
         myLcd.setColor(color.r, color.g, color.b);
         myLcd.setCursor(1,2);
-        myLcd.write(mappedThresh.toFixed(1) .toString());
+        myLcd.write(soundlevel .toString());
+
+        //SEND THE SOUNDLEVEL TO THE CLIENTS
+        io.emit('soundlevel-update', soundlevel);
+
     }
     setTimeout(periodicActivity, 200);
 }
